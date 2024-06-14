@@ -1,0 +1,116 @@
+CREATE TABLE "Setor" (
+	"setor_ID" INTEGER NOT NULL,
+	"nome_setor" VARCHAR(50) NOT NULL,
+	"desc_setor" VARCHAR(255) NOT NULL,
+	PRIMARY KEY("setor_ID" AUTOINCREMENT)
+);
+
+CREATE TABLE "Funcionario" (
+	"funcionario_ID" INTEGER NOT NULL,
+	"nome" VARCHAR(50) NOT NULL,
+	"dt_nasc" DATE NOT NULL,
+	"CPF" VARCHAR(14) NOT NULL,
+	"telefone" VARCHAR(20),
+	"email" VARCHAR(100),
+	"setor_ID" INTEGER NOT NULL,
+	PRIMARY KEY("funcionario_ID" AUTOINCREMENT),
+	FOREIGN KEY("setor_ID") REFERENCES "Setor"("setor_ID")
+);
+
+CREATE TABLE "Local" (
+	"local_ID" INTEGER NOT NULL,
+	"nome_local" VARCHAR(50) NOT NULL,
+	PRIMARY KEY("local_ID" AUTOINCREMENT)
+);
+
+CREATE TABLE "Entrada" (
+	"data_hora_ent"	DATETIME DEFAULT (datetime('now', 'localtime')),
+	"funcionario_ID" INTEGER NOT NULL,
+	"local_ID" INTEGER NOT NULL,
+	PRIMARY KEY("data_hora_ent","funcionario_ID","local_ID"),
+	FOREIGN KEY("funcionario_ID") REFERENCES "Funcionario"("funcionario_ID"),
+	FOREIGN KEY("local_ID") REFERENCES "Local"("local_ID")
+);
+
+CREATE TABLE "Saida" (
+	"data_hora_sai"	DATETIME DEFAULT (datetime('now', 'localtime')),
+	"funcionario_ID" INTEGER NOT NULL,
+	"local_ID" INTEGER NOT NULL,
+	PRIMARY KEY("data_hora_sai","funcionario_ID","local_ID"),
+	FOREIGN KEY("funcionario_ID") REFERENCES "Funcionario"("funcionario_ID"),
+	FOREIGN KEY("local_ID") REFERENCES "Local"("local_ID")
+);
+
+insert into setor (nome_setor, desc_setor) values ('TI', 'Tecnologia da informação');
+insert into setor (nome_setor, desc_setor) values ('ADM', 'Administração');
+insert into setor (nome_setor, desc_setor) values ('RH', 'Recursos Humanos');
+
+select * from setor;
+
+
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Jonas', '2001-11-26', '99999999999', '911111111', 'jonas@email.com', 1);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Nicolas', '2004-01-01', '88888888888', '922222222', 'Nicolas@email.com', 1);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Riguel', '1995-06-01', '55555555555', '933333333', 'Riguel@email.com', 2);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Gabriel', '2000-02-02', '11111111111', '955555555', 'Gabriel@email.com', 2);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Railson', '2000-06-15', '56784111111', '920201010', 'railson@gmail.com', 3);
+
+select * from funcionario;
+
+
+insert into local (nome_local)
+values ('Portão A');
+insert into local (nome_local)
+values ('Portão B');
+insert into local (nome_local)
+values ('Portão Y');
+insert into local (nome_local)
+values ('Portão Z');
+
+select * from local; 
+
+
+insert into entrada (funcionario_ID, local_ID) 
+values (1, 4);
+insert into entrada (funcionario_ID, local_ID) 
+values (2, 2);
+insert into entrada (funcionario_ID, local_ID) 
+values (3, 3);
+insert into entrada (funcionario_ID, local_ID) 
+values (4, 4);
+
+select * from entrada;
+
+
+insert into saida (funcionario_ID, local_ID) 
+values (1, 2);
+insert into saida (funcionario_ID, local_ID) 
+values (2, 3);
+insert into saida (funcionario_ID, local_ID) 
+values (3, 4);
+insert into saida (funcionario_ID, local_ID) 
+values (4, 4);
+
+select * from saida;
+
+
+// ENTRADA //
+SELECT f.nome, s.nome_setor, l.nome_local,  strftime('%d/%m/%Y %H:%M', e.data_hora_ent)
+FROM Entrada e
+JOIN Funcionario f ON e.funcionario_ID = f.funcionario_ID
+JOIN Setor s ON f.setor_ID = s.setor_ID
+JOIN Local l ON e.local_ID = l.local_ID
+ORDER BY e.data_hora_ent DESC;
+
+
+// SAÍDA //
+SELECT f.nome, st.nome_setor, l.nome_local, strftime('%d/%m/%Y %H:%M', sd.data_hora_sai) 
+FROM Saida sd
+JOIN Funcionario f ON sd.funcionario_ID = f.funcionario_ID
+JOIN Setor st ON f.setor_ID = st.setor_ID
+JOIN Local l ON sd.local_ID = l.local_ID
+ORDER BY sd.data_hora_sai DESC;

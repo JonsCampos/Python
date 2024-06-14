@@ -1,0 +1,41 @@
+AULA 01
+QUESTÃO 1 - c) JAD
+QUESTÃO 2 - b) RAD (Rapid Application Development)
+
+AULA 02
+QUESTÃO 1 - e) Ter como pré-requisito equipes tecnicamente muito qualificadas
+QUESTÃO 2 - a) A escolha de um framework sempre deve levar em consideração as necessidades do projeto que se deseja implementar. 
+            Portanto essa escolha tem que estar baseada nas bibliotecas, documentação disponível e a linguagem de programação disponibilizadas para desenvolver o projeto
+
+AULA 03
+QUESTÃO 1 - b) Binário e Texto
+QUESTÃO 2 - a) open("nome_arquivo",w)
+
+AULA 04
+QUESTÃO 1 - d) A forma é usando % (percentual), ou { } (chaves)
+QUESTÃO 2 - b) Apesar de não ser obrigatório o tratamento de exceções, ele deve ser usado sempre para evitar
+            problemas ao longo da execução do programa. 
+
+AULA 05
+QUESTÃO 1 - d) O cursor que é instanciado na linha 4 é fundamental para que o programa possa funcionar corretamente.
+QUESTÃO 2 - a) Permite a criação de tabelas e a execução dos comandos de inserção, exclusão, modificação e consulta no banco de dados.
+
+AULA 06
+QUESTÃO 1 - a) import sqlite3 conector = sqlite3.connect("exemplo.db")
+QUESTÃO 2 - d) create
+
+AULA 07
+QUESTÃO 1 - b) execute()
+QUESTÃO 2 - a) commit()
+
+AULA 08
+QUESTÃO 1 - a) execute()
+QUESTÃO 2 - c) fetchone, fetchall e fetchmany.
+
+AULA 09
+QUESTÃO 1 - d) É o framework padrão do Python para desenvolvimento de aplicações GUI.
+QUESTÃO 2 - c) Uma das formas de instalá-lo é através do pip, ou seja, pip install flexx.
+
+AULA 10
+QUESTÃO 1 - a) Botão: uma possibilidade de uso é para confirmar uma ação de salvar os dados.
+QUESTÃO 2 - d) Substituir lacuna1 por python.tkinter e lacuna2 por mainloop.

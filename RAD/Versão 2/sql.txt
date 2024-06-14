@@ -1,0 +1,96 @@
+CREATE TABLE "Setor" (
+	"setor_ID" INTEGER NOT NULL,
+	"nome_setor" VARCHAR(50) NOT NULL,
+	"desc_setor" VARCHAR(255),
+	PRIMARY KEY("setor_ID" AUTOINCREMENT)
+);
+
+CREATE TABLE "Funcionario" (
+	"funcionario_ID" INTEGER NOT NULL,
+	"nome"	VARCHAR(50) NOT NULL,
+	"dt_nasc" DATE NOT NULL,
+	"CPF" VARCHAR(14) NOT NULL,
+	"telefone" VARCHAR(20),
+	"email"	VARCHAR(100),
+	"setor_ID" INTEGER NOT NULL,
+	PRIMARY KEY("funcionario_ID" AUTOINCREMENT),
+	FOREIGN KEY("setor_ID") REFERENCES "Setor"("setor_ID")
+);
+
+CREATE TABLE "Local" (
+	"local_ID" INTEGER NOT NULL,
+	"nome_local" VARCHAR(50) NOT NULL,
+	PRIMARY KEY("local_ID" AUTOINCREMENT)
+);
+
+CREATE TABLE "Acesso" (
+	"data_hora" DATETIME DEFAULT (datetime('now', 'localtime')),
+	"tipo"	VARCHAR(7) NOT NULL,
+	"funcionario_ID" INTEGER NOT NULL,
+	"local_ID" INTEGER NOT NULL,
+	FOREIGN KEY("local_ID") REFERENCES "Local"("local_ID"),
+	FOREIGN KEY("funcionario_ID") REFERENCES "Funcionario"("funcionario_ID"),
+	PRIMARY KEY("data_hora","funcionario_ID","local_ID")
+);
+
+insert into setor (nome_setor, desc_setor) values ('TI', 'Tecnologia da informação');
+insert into setor (nome_setor, desc_setor) values ('ADM', 'Administração');
+insert into setor (nome_setor, desc_setor) values ('RH', 'Recursos Humanos');
+
+select * from setor;
+
+
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Jonas', '2001-11-26', '99999999999', '911111111', 'jonas@email.com', 1);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Nicolas', '2004-01-01', '88888888888', '922222222', 'Nicolas@email.com', 1);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Riguel', '1995-06-01', '55555555555', '933333333', 'Riguel@email.com', 2);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Gabriel', '2000-02-02', '11111111111', '955555555', 'Gabriel@email.com', 2);
+insert into funcionario (nome, dt_nasc, cpf, telefone, email, setor_id) 
+values ('Railson', '2000-06-15', '56784111111', '920201010', 'railson@gmail.com', 3);
+
+select * from funcionario;
+
+
+insert into local (nome_local)
+values ('Portão A');
+insert into local (nome_local)
+values ('Portão B');
+insert into local (nome_local)
+values ('Portão Y');
+insert into local (nome_local)
+values ('Portão Z');
+
+select * from local;
+
+
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (1, 4, 'Entrada');
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (2, 2, 'Entrada');
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (3, 3, 'Entrada');
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (4, 4, 'Entrada');
+
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (1, 2, 'Saída');
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (2, 3, 'Saída');
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (3, 4, 'Saída');
+insert into acesso (funcionario_ID, local_ID, tipo) 
+values (4, 4, 'Saída');
+
+select * from acesso;
+
+
+// ACESSO //
+SELECT f.nome, s.nome_setor, l.nome_local,  strftime('%d/%m/%Y - %H:%M', a.data_hora), a.tipo
+FROM Acesso a
+JOIN Funcionario f ON a.funcionario_ID = f.funcionario_ID
+JOIN Setor s ON f.setor_ID = s.setor_ID
+JOIN Local l ON a.local_ID = l.local_ID
+ORDER BY a.data_hora DESC;
